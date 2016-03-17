@@ -16,7 +16,8 @@ var DEFAULT_OPTIONS = {
     jsonOutput: false,
     jsonOutputFilename: 'grunt-cache-bust.json',
     length: 16,
-    separator: '.'
+    separator: '.',
+    prefix: ''
 };
 
 module.exports = function() {
@@ -49,7 +50,9 @@ module.exports = function() {
             var markup = grunt.file.read(filepath);
 
             _.each(assetMap, function(hashed, original) {
-                markup = markup.split(original).join(hashed);
+                var hashedp = opts.prefix + hashed;
+                var origp = opts.prefix + original;
+                markup = markup.split(origp).join(hashedp);
             });
 
             grunt.file.write(filepath, markup);
